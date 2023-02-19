@@ -50,7 +50,7 @@ impl State {
             self.player.x + SCREEN_WIDTH, self.score
             );
         }
-        if self.player.y > SCREEN_HEIGHT as i32  {
+        if self.player.y > SCREEN_HEIGHT as i32  || self.obstacle.hit_obstacle(&self.player){
             self.mode = GameMode::End;
         }
     }
@@ -206,7 +206,7 @@ impl Obstacle {
     fn hit_obstacle(&self, player:&Player) ->bool{
     let half_size = self.size / 2;
     let does_x_match = player.x == self.x;
-    let player_above_gap = player.y < self.gap_y + half_size;
+    let player_above_gap = player.y < self.gap_y - half_size;
     let player_below_gap = player.y > self.gap_y + half_size;
     does_x_match && (player_above_gap || player_below_gap)
 }
